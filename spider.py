@@ -11,12 +11,12 @@ from selenium.webdriver.chrome.options import Options
 
 import psycopg2
 
-# year = int(input("please input the beginning year:"))
-# month = int(input("please input the beginning month:"))
-# day = int(input("please input the beginning day:"))
-year=2019
-month = 1
-day = 1
+year = int(input("please input the beginning year:"))
+month = int(input("please input the beginning month:"))
+day = int(input("please input the beginning day:"))
+# year=2019
+# month = 1
+# day = 1
 BeginDate = datetime.datetime(year, month, day)
 now = datetime.datetime.now()
 
@@ -30,7 +30,7 @@ def GetBrower(URL):
 def GetHtml(browser, year, month, day):
     browser.find_element_by_id("txtShareholdingDate").click()
 
-    browser.find_element_by_xpath("//b[@class='year']/ul/li[last()-{}]/button".format(BeginDate.year - year)).click()
+    browser.find_element_by_xpath("//b[@class='year']/ul/li[{}]/button".format(now.year - year + 1)).click()
 
     browser.find_element_by_xpath("//b[@class='month']/ul/li[{}]/button".format(month)).click()
 
@@ -75,7 +75,7 @@ def Crawl(URL):
     browers = GetBrower(URL)
 
 
-    for i in range(1, DateRange):
+    for i in range(0, DateRange + 1):
         date = BeginDate +  relativedelta(days=i)
         html = GetHtml(browers, date.year, date.month, date.day)
 
